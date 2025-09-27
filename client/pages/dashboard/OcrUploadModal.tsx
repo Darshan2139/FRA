@@ -7,12 +7,15 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "@/hooks/use-toast";
 import { useApp } from "@/context/AppContext";
 import { useNavigate } from "react-router-dom";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export const OcrUploadModal: React.FC<{ open: boolean; onOpenChange: (v: boolean) => void }>=({ open, onOpenChange }) => {
   const { addHistory, addNotification, addClaim, setOcrDraft } = useApp();
   const [progress, setProgress] = useState(0);
   const [files, setFiles] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
+  const [completed, setCompleted] = useState(false);
+  const [stored, setStored] = useState(false);
   const timerRef = useRef<number | null>(null);
   const [name, setName] = useState("Radha Majhi");
   const [village, setVillage] = useState("Badakua");
@@ -26,6 +29,9 @@ export const OcrUploadModal: React.FC<{ open: boolean; onOpenChange: (v: boolean
       if (timerRef.current) { window.clearInterval(timerRef.current); timerRef.current = null; }
       setProgress(0);
       setUploading(false);
+      setCompleted(false);
+      setStored(false);
+      setFiles([]);
       return;
     }
   }, [open]);
@@ -40,6 +46,8 @@ export const OcrUploadModal: React.FC<{ open: boolean; onOpenChange: (v: boolean
       timerRef.current = null;
     }
     setProgress(0);
+    setCompleted(false);
+    setStored(false);
     setUploading(true);
     timerRef.current = window.setInterval(() => {
       setProgress((p) => {
@@ -47,13 +55,20 @@ export const OcrUploadModal: React.FC<{ open: boolean; onOpenChange: (v: boolean
         if (next === 100 && timerRef.current) {
           window.clearInterval(timerRef.current);
           timerRef.current = null;
+          setCompleted(true);
+          setTimeout(() => {
+            setStored(true);
+            addHistory({ type: "upload", title: "OCR Completed", description: `${pattaId} stored in Government Records` });
+            addNotification({ title: "Document Processed", description: `${pattaId} stored securely` });
+            toast({ title: "Processing complete", description: "Extracted data stored in Government Records." });
+          }, 300);
         }
         return next;
       });
-    }, 200);
+    }, 500); // 10 steps x 500ms = 5s
   };
 
-  const actionsDisabled = uploading && progress < 100;
+  const actionsDisabled = !(completed && stored);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -72,7 +87,7 @@ export const OcrUploadModal: React.FC<{ open: boolean; onOpenChange: (v: boolean
             </div>
           )}
           <div className="flex items-center justify-end">
-            <Button onClick={handleUpload} disabled={files.length === 0 || (uploading && progress < 100)}>Upload</Button>
+            <Button onClick={handleUpload} disabled={files.length === 0 || (uploading && !completed)}>Upload</Button>
           </div>
 
           {uploading && (
@@ -89,30 +104,44 @@ export const OcrUploadModal: React.FC<{ open: boolean; onOpenChange: (v: boolean
             </div>
           )}
 
-          <div className="grid sm:grid-cols-2 gap-3">
-            <div className="grid gap-1">
-              <Label>Name</Label>
-              <Input value={name} onChange={(e)=> setName(e.target.value)} />
-            </div>
-            <div className="grid gap-1">
-              <Label>Village</Label>
-              <Input value={village} onChange={(e)=> setVillage(e.target.value)} />
-            </div>
-            <div className="grid gap-1">
-              <Label>Coordinates</Label>
-              <Input value={coordinates} onChange={(e)=> setCoordinates(e.target.value)} />
-            </div>
-            <div className="grid gap-1">
-              <Label>Claim Type</Label>
-              <Input value={claimType} onChange={(e)=> setClaimType(e.target.value)} />
-            </div>
-          </div>
-          <div className="grid sm:grid-cols-2 gap-3">
-            <div className="grid gap-1">
-              <Label>Patta ID</Label>
-              <Input value={pattaId} onChange={(e)=> setPattaId(e.target.value)} />
-            </div>
-          </div>
+          {stored && (
+            <Alert>
+              <AlertDescription>
+                Extracted data stored in Government Records. You can review and save the claim.
+              </AlertDescription>
+            </Alert>
+          )}
+
+          {completed && (
+            <>
+              <div className="text-sm font-semibold">Extracted Data</div>
+              <div className="grid sm:grid-cols-2 gap-3">
+                <div className="grid gap-1">
+                  <Label>Name</Label>
+                  <Input value={name} onChange={(e)=> setName(e.target.value)} />
+                </div>
+                <div className="grid gap-1">
+                  <Label>Village</Label>
+                  <Input value={village} onChange={(e)=> setVillage(e.target.value)} />
+                </div>
+                <div className="grid gap-1">
+                  <Label>Coordinates</Label>
+                  <Input value={coordinates} onChange={(e)=> setCoordinates(e.target.value)} />
+                </div>
+                <div className="grid gap-1">
+                  <Label>Claim Type</Label>
+                  <Input value={claimType} onChange={(e)=> setClaimType(e.target.value)} />
+                </div>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-3">
+                <div className="grid gap-1">
+                  <Label>Patta ID</Label>
+                  <Input value={pattaId} onChange={(e)=> setPattaId(e.target.value)} />
+                </div>
+              </div>
+            </>
+          )}
+
           <div className="flex items-center justify-end gap-2">
             <Button variant="destructive" disabled={actionsDisabled} onClick={()=>{ toast({ title: "Claim rejected", description: "Marked as rejected." }); addHistory({ type: "status", title: "Claim Rejected", description: "Claim moved to Rejected." }); onOpenChange(false); }}>Reject</Button>
             <Button variant="outline" disabled={actionsDisabled} onClick={()=>{ setOcrDraft({ pattaId, name, village, coordinates, claimType, status: "Pending" }); nav("/patta"); onOpenChange(false); }}>Edit</Button>
