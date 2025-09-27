@@ -8,7 +8,7 @@ import { Role, useApp } from "@/context/AppContext";
 
 export default function Index() {
   const nav = useNavigate();
-  const { role, setRole, setAuthenticated } = useApp();
+  const { role, setRole, setAuthenticated, isAuthenticated } = useApp();
   return (
     <>
     <main className="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-background to-white">
