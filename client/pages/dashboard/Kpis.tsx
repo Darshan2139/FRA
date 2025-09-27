@@ -9,9 +9,22 @@ interface KpiProps {
 
 type Period = "7d" | "30d" | "YTD";
 
-const Sparkline: React.FC<{ colorClass?: string }> = ({ colorClass = "stroke-primary" }) => (
-  <svg className="w-full h-10" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden>
-    <polyline fill="none" vectorEffect="non-scaling-stroke" strokeWidth="2" className={colorClass} points="0,20 10,18 20,22 30,15 40,17 50,12 60,14 70,10 80,13 90,9 100,12" />
+const Sparkline: React.FC<{ colorClass?: string }> = ({
+  colorClass = "stroke-primary",
+}) => (
+  <svg
+    className="w-full h-10"
+    viewBox="0 0 100 30"
+    preserveAspectRatio="none"
+    aria-hidden
+  >
+    <polyline
+      fill="none"
+      vectorEffect="non-scaling-stroke"
+      strokeWidth="2"
+      className={colorClass}
+      points="0,20 10,18 20,22 30,15 40,17 50,12 60,14 70,10 80,13 90,9 100,12"
+    />
   </svg>
 );
 
@@ -27,7 +40,10 @@ export const Kpis: React.FC<KpiProps> = ({ loading }) => {
     { key: "villages", title: "Villages Analyzed", icon: MapPin },
   ] as const;
 
-  const datasets: Record<Period, Record<(typeof items)[number]["key"], { value: number; deltaPct: number }>> = {
+  const datasets: Record<
+    Period,
+    Record<(typeof items)[number]["key"], { value: number; deltaPct: number }>
+  > = {
     "7d": {
       total: { value: 124_532, deltaPct: 2.3 },
       granted: { value: 62_410, deltaPct: 1.1 },
@@ -60,12 +76,17 @@ export const Kpis: React.FC<KpiProps> = ({ loading }) => {
             <CardHeader className="pb-2 flex-row items-center justify-between bg-gradient-to-r from-background to-transparent">
               <div className="flex items-center gap-2">
                 <it.icon className="h-4 w-4 text-muted-foreground" />
-                <CardTitle className="text-sm font-medium">{it.title}</CardTitle>
+                <CardTitle className="text-sm font-medium">
+                  {it.title}
+                </CardTitle>
               </div>
               <div className="flex gap-1">
                 {filterPills.map((p) => (
                   <button key={p} onClick={() => setPeriod(p)}>
-                    <Badge variant={p === period ? "default" : "outline"} className="rounded-full px-2 py-0.5 text-[10px]">
+                    <Badge
+                      variant={p === period ? "default" : "outline"}
+                      className="rounded-full px-2 py-0.5 text-[10px]"
+                    >
                       {p}
                     </Badge>
                   </button>
@@ -73,12 +94,31 @@ export const Kpis: React.FC<KpiProps> = ({ loading }) => {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-extrabold tracking-tight">{loading ? "—" : numberFmt.format(value)}</div>
+              <div className="text-2xl font-extrabold tracking-tight">
+                {loading ? "—" : numberFmt.format(value)}
+              </div>
               <div className="mt-1 text-xs text-muted-foreground">
-                {isUp ? <span className="text-[hsl(var(--status-granted))] font-medium">+{deltaPct.toFixed(1)}%</span> : <span className="text-[hsl(var(--status-rejected))] font-medium">{deltaPct.toFixed(1)}%</span>} <span className="ml-1">vs last period</span>
+                {isUp ? (
+                  <span className="text-[hsl(var(--status-granted))] font-medium">
+                    +{deltaPct.toFixed(1)}%
+                  </span>
+                ) : (
+                  <span className="text-[hsl(var(--status-rejected))] font-medium">
+                    {deltaPct.toFixed(1)}%
+                  </span>
+                )}{" "}
+                <span className="ml-1">vs last period</span>
               </div>
               <div className="mt-2">
-                <Sparkline colorClass={idx === 1 ? "stroke-[hsl(var(--status-granted))]" : idx === 2 ? "stroke-[hsl(var(--status-pending))]" : "stroke-primary"} />
+                <Sparkline
+                  colorClass={
+                    idx === 1
+                      ? "stroke-[hsl(var(--status-granted))]"
+                      : idx === 2
+                        ? "stroke-[hsl(var(--status-pending))]"
+                        : "stroke-primary"
+                  }
+                />
               </div>
             </CardContent>
           </Card>

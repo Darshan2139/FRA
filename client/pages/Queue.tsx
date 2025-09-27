@@ -1,6 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useApp } from "@/context/AppContext";
 import { toast } from "@/hooks/use-toast";
 import { BackButton } from "@/components/ui/back-button";
@@ -18,15 +25,27 @@ export default function Queue() {
 
   const onAction = (action: "Approve" | "Reject", r: Row) => {
     const pastTense = action === "Approve" ? "Approved" : "Rejected";
-    toast({ title: pastTense, description: `${r.patta} ${pastTense.toLowerCase()}` });
-    addHistory({ type: "status", title: `Claim ${pastTense}`, description: `${r.patta} - ${r.claimant}` });
-    addNotification({ title: `Claim ${pastTense}`, description: `${r.patta} updated` });
+    toast({
+      title: pastTense,
+      description: `${r.patta} ${pastTense.toLowerCase()}`,
+    });
+    addHistory({
+      type: "status",
+      title: `Claim ${pastTense}`,
+      description: `${r.patta} - ${r.claimant}`,
+    });
+    addNotification({
+      title: `Claim ${pastTense}`,
+      description: `${r.patta} updated`,
+    });
     setRows((prev) => prev.filter((i) => i.patta !== r.patta));
   };
 
   return (
     <main className="container py-8">
-      <div className="-mt-2 mb-2"><BackButton /></div>
+      <div className="-mt-2 mb-2">
+        <BackButton />
+      </div>
       <Card>
         <CardHeader className="flex-row items-center justify-between">
           <CardTitle>Verification Queue</CardTitle>
@@ -42,20 +61,37 @@ export default function Queue() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {rows.map((r)=> (
+              {rows.map((r) => (
                 <TableRow key={r.patta}>
                   <TableCell>{r.patta}</TableCell>
                   <TableCell>{r.claimant}</TableCell>
                   <TableCell>{r.status}</TableCell>
                   <TableCell className="text-right space-x-2">
-                    <Button size="sm" variant="outline" onClick={()=> onAction("Approve", r)}>Approve</Button>
-                    <Button size="sm" variant="destructive" onClick={()=> onAction("Reject", r)}>Reject</Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => onAction("Approve", r)}
+                    >
+                      Approve
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      onClick={() => onAction("Reject", r)}
+                    >
+                      Reject
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
               {rows.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={4} className="text-center text-sm text-muted-foreground py-6">No items in queue</TableCell>
+                  <TableCell
+                    colSpan={4}
+                    className="text-center text-sm text-muted-foreground py-6"
+                  >
+                    No items in queue
+                  </TableCell>
                 </TableRow>
               )}
             </TableBody>
