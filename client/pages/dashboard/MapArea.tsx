@@ -12,10 +12,10 @@ export interface MapAreaProps {
 
 export const MapArea: React.FC<MapAreaProps> = ({ onSelectVillage }) => {
   return (
-    <div className="relative h-full w-full">
+    <div className="relative w-full h-full min-h-[420px] sm:min-h-[480px] lg:min-h-[620px]">
       {/* Map placeholder */}
       <Card className="absolute inset-0 overflow-hidden shadow">
-        <img src="/map-dashboard.svg" alt="Map background" className="absolute inset-0 w-full h-full object-cover opacity-90" />
+        <img src="/map-dashboard.svg" alt="Map background" className="absolute inset-0 w-full h-full object-cover object-center opacity-90" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_hsl(var(--border))_1px,_transparent_0)] [background-size:16px_16px]" aria-hidden />
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
           <div className="text-center">
