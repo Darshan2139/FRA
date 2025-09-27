@@ -117,13 +117,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
     setHistory((prev) => [item, ...prev]);
   };
+  const removeHistory: AppContextType["removeHistory"] = (id) => {
+    setHistory((prev) => prev.filter((h) => h.id !== id));
+  };
 
   const addClaim: AppContextType["addClaim"] = (c) => setClaims((prev) => [c, ...prev]);
   const updateClaim: AppContextType["updateClaim"] = (c) => setClaims((prev) => prev.map((i) => (i.id === c.id ? c : i)));
   const removeClaim: AppContextType["removeClaim"] = (id) => setClaims((prev) => prev.filter((i) => i.id !== id));
 
   const value = useMemo(
-    () => ({ role, setRole, selectedState, setSelectedState, searchQuery, setSearchQuery, notifications, setNotifications, notificationsList, setNotificationsList, addNotification, history, addHistory, markAllNotificationsRead, location, setLocation, claims, addClaim, updateClaim, removeClaim, ocrDraft, setOcrDraft, isAuthenticated: isAuthenticatedState, setAuthenticated }),
+    () => ({ role, setRole, selectedState, setSelectedState, searchQuery, setSearchQuery, notifications, setNotifications, notificationsList, setNotificationsList, addNotification, history, addHistory, removeHistory, markAllNotificationsRead, location, setLocation, claims, addClaim, updateClaim, removeClaim, ocrDraft, setOcrDraft, isAuthenticated: isAuthenticatedState, setAuthenticated }),
     [role, selectedState, searchQuery, notifications, notificationsList, history, location, claims, ocrDraft, isAuthenticatedState]
   );
 
