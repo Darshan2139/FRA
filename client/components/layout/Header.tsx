@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Bell, MapPin, Search, ChevronDown, Shield } from "lucide-react";
+import { Bell, MapPin, Search, ChevronDown, Shield, Handshake } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { AtlasState, Role, useApp } from "@/context/AppContext";
 import React from "react";
 import { toast } from "@/hooks/use-toast";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const states: AtlasState[] = ["Madhya Pradesh", "Tripura", "Odisha", "Telangana"];
 const roles: Role[] = ["Ministry", "District Officer", "Forest Dept", "NGO"];
@@ -87,16 +88,37 @@ export const Header: React.FC = () => {
           )}
 
           {isAuthenticated && (
-            <Button variant="ghost" asChild aria-label="Notifications" className="relative">
-              <Link to="/history">
-                <Bell className="h-5 w-5" />
-                {notifications > 0 && (
-                  <span className="absolute -top-1 -right-1 rounded-full bg-primary text-primary-foreground text-[10px] px-1.5 py-0.5">
-                    {notifications}
-                  </span>
-                )}
-              </Link>
-            </Button>
+            <>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="gap-2" aria-label="Partners">
+                    <Handshake className="h-5 w-5" />
+                    <span className="hidden md:inline">Partners</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel>Partner Organisations</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={()=> toast({ title: "NIC", description: "National Informatics Centre" })}>NIC — National Informatics Centre</DropdownMenuItem>
+                  <DropdownMenuItem onClick={()=> toast({ title: "MeitY", description: "Ministry of Electronics & IT" })}>MeitY — Ministry of Electronics & IT</DropdownMenuItem>
+                  <DropdownMenuItem onClick={()=> toast({ title: "Digital India", description: "DigiLocker / Platforms" })}>Digital India</DropdownMenuItem>
+                  <DropdownMenuItem onClick={()=> toast({ title: "ISRO NRSC", description: "Satellite & GIS Data" })}>ISRO NRSC</DropdownMenuItem>
+                  <DropdownMenuItem onClick={()=> toast({ title: "C-DAC", description: "Centre for Development of Advanced Computing" })}>C-DAC</DropdownMenuItem>
+                  <DropdownMenuItem onClick={()=> toast({ title: "UIDAI", description: "Aadhaar Services" })}>UIDAI</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <Button variant="ghost" asChild aria-label="Notifications" className="relative">
+                <Link to="/history">
+                  <Bell className="h-5 w-5" />
+                  {notifications > 0 && (
+                    <span className="absolute -top-1 -right-1 rounded-full bg-primary text-primary-foreground text-[10px] px-1.5 py-0.5">
+                      {notifications}
+                    </span>
+                  )}
+                </Link>
+              </Button>
+            </>
           )}
 
           {!isAuthenticated && (
