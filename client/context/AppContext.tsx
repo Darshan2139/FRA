@@ -29,6 +29,7 @@ interface AppContextType {
   addNotification: (n: Omit<NotificationItem, "id" | "ts" | "read"> & Partial<Pick<NotificationItem, "read" | "ts">>) => void;
   history: HistoryItem[];
   addHistory: (h: Omit<HistoryItem, "id" | "ts"> & Partial<Pick<HistoryItem, "ts">>) => void;
+  removeHistory: (id: string) => void;
   markAllNotificationsRead: () => void;
   location: LocationPath;
   setLocation: (l: LocationPath) => void;
