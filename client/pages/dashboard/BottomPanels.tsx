@@ -13,7 +13,7 @@ export const BottomPanels = () => {
       <Card>
         <CardHeader className="flex-row items-center justify-between">
           <CardTitle>Analytics</CardTitle>
-          <Button variant="outline" size="sm" onClick={()=> { toast({ title: "Export queued", description: "PDF/Excel export started." }); addHistory({ type: "export", title: "Analytics Export", description: "PDF/Excel export queued" }); }}>Export PDF/Excel</Button>
+          <Button variant="outline" size="sm" onClick={()=> { toast({ title: "Export queued", description: "PDF/Excel export started." }); addHistory({ type: "export", title: "Analytics Export", description: "PDF/Excel export queued" }); nav("/history?type=export"); }}>Export PDF/Excel</Button>
         </CardHeader>
         <CardContent className="grid sm:grid-cols-3 gap-4 text-sm">
           <div>
