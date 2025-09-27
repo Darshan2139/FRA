@@ -100,9 +100,14 @@ export const Header: React.FC = () => {
           )}
 
           {!isAuthenticated && (
-            <Button variant="secondary" size="sm" asChild className="hidden md:inline-flex">
-              <Link to="/login">Gov Login</Link>
-            </Button>
+            <>
+              <Button variant="ghost" size="sm" asChild className="hidden md:inline-flex">
+                <Link to="/about">About</Link>
+              </Button>
+              <Button variant="secondary" size="sm" asChild className="hidden md:inline-flex">
+                <Link to="/login">Gov Login</Link>
+              </Button>
+            </>
           )}
 
           {isAuthenticated && (
