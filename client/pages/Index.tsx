@@ -40,7 +40,9 @@ export default function Index() {
                 {(["Ministry","District Officer","Forest Dept","NGO"] as Role[]).map(r => (<SelectItem key={r} value={r}>{r}</SelectItem>))}
               </SelectContent>
             </Select>
-            <Button size="sm" variant="secondary" onClick={()=> { setAuthenticated(true); nav("/dashboard"); }}>Go to Dashboard</Button>
+            {isAuthenticated && (
+              <Button size="sm" variant="secondary" onClick={()=> { nav("/dashboard"); }}>Go to Dashboard</Button>
+            )}
           </div>
           <div className="mt-6 flex items-center gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-2"><Shield className="h-4 w-4" /> Secure SSO/JWT</div>
@@ -98,9 +100,11 @@ export default function Index() {
             <p className="text-muted-foreground">Try the live wireframe with dummy data and interactions.</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Button asChild size="lg" className="bg-primary text-primary-foreground">
-              <Link to="/dashboard">Open Dashboard <ArrowRight className="ml-2 h-4 w-4" /></Link>
-            </Button>
+            {isAuthenticated && (
+              <Button asChild size="lg" className="bg-primary text-primary-foreground">
+                <Link to="/dashboard">Open Dashboard <ArrowRight className="ml-2 h-4 w-4" /></Link>
+              </Button>
+            )}
             <Button asChild variant="outline">
               <a href="#partners">Partners & Contact</a>
             </Button>
