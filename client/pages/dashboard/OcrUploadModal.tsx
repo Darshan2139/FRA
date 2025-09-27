@@ -65,7 +65,7 @@ export const OcrUploadModal: React.FC<{ open: boolean; onOpenChange: (v: boolean
         }
         return next;
       });
-    }, 500); // 10 steps x 500ms = 5s
+    }, 900); // 10 steps x 900ms = 9s
   };
 
   const actionsDisabled = !(completed && stored);

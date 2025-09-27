@@ -54,7 +54,7 @@ export default function Index() {
             <img src="/map-landing.svg" alt="WebGIS Map Preview" className="w-full h-full object-cover" />
             <div className="absolute top-3 right-3 bg-card/90 backdrop-blur rounded-md border px-3 py-1.5 text-xs shadow">
               <div><span className="font-semibold">Lat:</span> 18.813°N</div>
-              <div><span className="font-semibold">Lon:</span> 82.902°E</div>
+              <div><span className="font-semibold">Lon:</span> 82.902��E</div>
               <div><span className="font-semibold">Alt:</span> 870 m</div>
             </div>
           </div>
@@ -123,7 +123,7 @@ export default function Index() {
           <div>
             <h3 className="font-semibold text-lg">Download Brief</h3>
             <Button asChild size="sm" className="mt-2">
-              <a href="#" aria-disabled className="pointer-events-none">Project Brief (PDF)</a>
+              <Link to="/project-brief">Project Brief (PDF)</Link>
             </Button>
           </div>
         </div>
