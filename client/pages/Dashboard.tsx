@@ -7,6 +7,7 @@ import { MapArea } from "./dashboard/MapArea";
 import { RightDrawer } from "./dashboard/RightDrawer";
 import { BottomPanels } from "./dashboard/BottomPanels";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DssModal } from "./dashboard/DssModal";
 import { OcrUploadModal } from "./dashboard/OcrUploadModal";
 import { RoleActions } from "./dashboard/RoleActions";
@@ -48,6 +49,24 @@ export default function Dashboard() {
 
   const simulateChange = () => setLoading(true);
 
+  const DssMiniPanel = () => (
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-base">DSS: Top Recommendations</CardTitle>
+      </CardHeader>
+      <CardContent className="flex items-start justify-between gap-3">
+        <div className="text-sm">
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Jal Jeevan — <span className="text-xs text-muted-foreground">Low water index</span></li>
+            <li>PM Awas — <span className="text-xs text-muted-foreground">Kuccha houses</span></li>
+            <li>MGNREGA Ponds — <span className="text-xs text-muted-foreground">Forest edge proximity</span></li>
+          </ul>
+        </div>
+        <Button size="sm" onClick={() => navigate('/dss')}>View</Button>
+      </CardContent>
+    </Card>
+  );
+
   return (
     <div className="min-h-[calc(100vh-4rem)]">
       <BreadcrumbBar />
@@ -69,6 +88,11 @@ export default function Dashboard() {
           <RoleActions onOpenUpload={() => setOcrOpen(true)} />
         </div>
 
+        {/* DSS mini panel on mobile/tablet */}
+        <div className="mt-4 lg:hidden">
+          <DssMiniPanel />
+        </div>
+
         <div className="mt-4 grid grid-rows-[auto_1fr] lg:grid-rows-1 grid-cols-1 lg:grid-cols-[300px_1fr_360px] gap-4 min-h-[520px]">
           {/* Sidebar */}
           <div className="row-span-1">
@@ -78,24 +102,11 @@ export default function Dashboard() {
           {/* Map area */}
           <div className="row-span-1">
             <MapArea onSelectVillage={(id) => { setSelectedVillage(id); setDrawerOpen(true); const p=new URLSearchParams(location.search); p.set("village", id); navigate({ search: p.toString() }, { replace: true }); }} />
-            {/* DSS mini-panel */}
-            <div className="mt-3">
-              <div className="sticky bottom-4 inline-flex min-w-[320px] max-w-lg items-start gap-3 rounded-md border bg-card p-3 shadow">
-                <div className="text-sm">
-                  <div className="font-semibold">DSS: Top Recommendations</div>
-                  <ul className="mt-1 list-disc pl-5 space-y-1">
-                    <li>Jal Jeevan — <span className="text-xs text-muted-foreground">Low water index</span></li>
-                    <li>PM Awas — <span className="text-xs text-muted-foreground">Kuccha houses</span></li>
-                    <li>MGNREGA Ponds — <span className="text-xs text-muted-foreground">Forest edge proximity</span></li>
-                  </ul>
-                </div>
-                <Button size="sm" onClick={() => navigate('/dss')}>View</Button>
-              </div>
-            </div>
           </div>
 
-          {/* Right drawer */}
-          <div className="hidden lg:block">
+          {/* Right column with DSS mini panel and drawer */}
+          <div className="hidden lg:flex flex-col gap-4">
+            <DssMiniPanel />
             <RightDrawer open={drawerOpen} village={selectedVillage} onClose={() => { setDrawerOpen(false); const p=new URLSearchParams(location.search); p.delete("village"); navigate({ search: p.toString() }, { replace: true }); }} onOpenUpload={() => { setOcrOpen(true); const p=new URLSearchParams(location.search); p.set("ocr","1"); navigate({ search: p.toString() }, { replace: true }); }} onOpenDss={() => { setDssOpen(true); const p=new URLSearchParams(location.search); p.set("dss","1"); navigate({ search: p.toString() }, { replace: true }); }} />
           </div>
         </div>
