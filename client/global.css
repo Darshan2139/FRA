@@ -1,0 +1,120 @@
+/** @import must precede all other statements */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * Tailwind CSS theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    /* Neutral backgrounds and base text */
+    --background: 0 0% 96%; /* Light Gray #F5F5F5 */
+    --foreground: 0 0% 13%; /* Dark Charcoal #212121 */
+
+    --card: 0 0% 100%; /* White */
+    --card-foreground: 0 0% 13%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 13%;
+
+    /* Brand palette */
+    --primary: 30 100% 60%; /* Deep Saffron #FF9933 */
+    --primary-foreground: 0 0% 100%; /* White */
+
+    --secondary: 115 89% 28%; /* India Green #138808 */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 33%; /* Medium Gray #555555 */
+
+    --accent: 210 100% 20%; /* Navy Blue #003366 */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 68% 41.6%; /* Brick Red #B22222 */
+    --destructive-foreground: 0 0% 100%;
+
+    /* UI tokens */
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
+    --ring: 210 100% 20%; /* Navy for focus ring */
+
+    --radius: 0.5rem;
+
+    /* Sidebar tokens */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 13%;
+    --sidebar-primary: 30 100% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 94%;
+    --sidebar-accent-foreground: 0 0% 13%;
+    --sidebar-border: 0 0% 85%;
+    --sidebar-ring: 210 100% 20%;
+
+    /* Status tokens (colorblind-friendly patterns handled via CSS classes) */
+    --status-pending: 45 100% 51%; /* Amber #FFC107 */
+    --status-granted: 123 46% 33.5%; /* Teal Green #2E7D32 */
+    --status-rejected: 0 68% 41.6%; /* Brick Red */
+  }
+
+  .dark {
+    --background: 240 5% 10%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 6% 12%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 6% 12%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 30 100% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 115 89% 28%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 5% 16%;
+    --muted-foreground: 0 0% 84%;
+
+    --accent: 210 100% 20%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 4% 20%;
+    --input: 240 4% 20%;
+    --ring: 210 100% 50%;
+
+    --sidebar-background: 240 5% 12%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 30 100% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 4% 18%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 4% 24%;
+    --sidebar-ring: 210 100% 50%;
+
+    --status-pending: 45 100% 51%;
+    --status-granted: 123 46% 33.5%;
+    --status-rejected: 0 62.8% 30.6%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  a {
+    @apply text-[hsl(210_100%_20%)] underline-offset-4 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+}
