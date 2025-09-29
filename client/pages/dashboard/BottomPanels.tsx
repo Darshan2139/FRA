@@ -81,17 +81,18 @@ export const BottomPanels = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {[
-                { p: "OD-PA-0012", s: "Pending", o: "R. Verma" },
-                { p: "OD-RG-2341", s: "Review", o: "S. Nandi" },
-                { p: "OD-MB-0913", s: "Approve", o: "A. Das" },
-              ].map((t, i) => (
+              {workflowTasks.map((t, i) => (
                 <TableRow key={i}>
-                  <TableCell>{t.p}</TableCell>
-                  <TableCell>{t.s}</TableCell>
-                  <TableCell>{t.o}</TableCell>
+                  <TableCell>{t.patta}</TableCell>
+                  <TableCell>{t.status}</TableCell>
+                  <TableCell>{t.officer ?? "—"}</TableCell>
                 </TableRow>
               ))}
+              {workflowTasks.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={3} className="text-center text-muted-foreground">No tasks</TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </CardContent>
