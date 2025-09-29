@@ -37,7 +37,7 @@ export default function DigitalPatta() {
       toast({ title: "Updated", description: pattaId });
     } else {
       const newId = crypto.randomUUID();
-      addClaim({ id: newId, pattaId, name, village, coordinates, claimType, area, status: status as any, createdAt: new Date().toISOString(), source: ocrDraft ? "ocr" : "manual" });
+      addClaim({ id: newId, pattaId, name, village, coordinates, claimType, area, status: status as any, createdAt: new Date().toISOString(), source: ocrDraft ? "ocr" : "manual", state: selectedState });
       addNotification({ title: "New Digital Patta", description: pattaId });
       addHistory({ type: "upload", title: "Digital Patta Saved", description: pattaId });
       setOcrDraft(null);
