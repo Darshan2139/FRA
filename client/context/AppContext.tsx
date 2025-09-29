@@ -238,6 +238,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
     setHistory((prev) => prev.filter((h) => h.id !== id));
   };
 
+  const addWorkflowTask: AppContextType["addWorkflowTask"] = (t) =>
+    setWorkflowTasks((prev) => [t, ...prev]);
+  const updateWorkflowTask: AppContextType["updateWorkflowTask"] = (patta, patch) =>
+    setWorkflowTasks((prev) => prev.map((t) => (t.patta === patta ? { ...t, ...patch } : t)));
+  const removeWorkflowTask: AppContextType["removeWorkflowTask"] = (patta) =>
+    setWorkflowTasks((prev) => prev.filter((t) => t.patta !== patta));
+
   const addClaim: AppContextType["addClaim"] = (c) =>
     setClaims((prev) => [c, ...prev]);
   const updateClaim: AppContextType["updateClaim"] = (c) =>
