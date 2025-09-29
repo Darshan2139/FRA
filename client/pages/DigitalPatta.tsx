@@ -12,7 +12,7 @@ import { toast } from "@/hooks/use-toast";
 function useQuery() { const { search } = useLocation(); return useMemo(()=> new URLSearchParams(search), [search]); }
 
 export default function DigitalPatta() {
-  const { claims, addClaim, updateClaim, ocrDraft, setOcrDraft, addHistory, addNotification } = useApp();
+  const { claims, addClaim, updateClaim, ocrDraft, setOcrDraft, addHistory, addNotification, selectedState } = useApp();
   const q = useQuery();
   const id = q.get("id");
   const existing = claims.find(c => c.id === id);
