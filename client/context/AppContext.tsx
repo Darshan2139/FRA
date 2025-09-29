@@ -198,6 +198,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [location]);
   React.useEffect(() => {
     try {
+      localStorage.setItem("fra_tasks", JSON.stringify(workflowTasks));
+    } catch {}
+  }, [workflowTasks]);
+  React.useEffect(() => {
+    try {
       localStorage.setItem("fra_claims", JSON.stringify(claims));
     } catch {}
   }, [claims]);
