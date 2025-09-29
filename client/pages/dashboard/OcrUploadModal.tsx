@@ -18,7 +18,7 @@ export const OcrUploadModal: React.FC<{
   open: boolean;
   onOpenChange: (v: boolean) => void;
 }> = ({ open, onOpenChange }) => {
-  const { addHistory, addNotification, addClaim, setOcrDraft } = useApp();
+  const { addHistory, addNotification, addClaim, setOcrDraft, selectedState } = useApp();
   const [progress, setProgress] = useState(0);
   const [files, setFiles] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
