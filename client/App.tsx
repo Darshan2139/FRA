@@ -16,6 +16,7 @@ import Queue from "./pages/Queue";
 import DssRecommendations from "./pages/DssRecommendations";
 import Profile from "./pages/Profile";
 import DigitalPatta from "./pages/DigitalPatta";
+import ProjectBrief from "./pages/ProjectBrief";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AppProvider } from "@/context/AppContext";
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/dss" element={<DssRecommendations />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/patta" element={<DigitalPatta />} />
+            <Route path="/project-brief" element={<ProjectBrief />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
