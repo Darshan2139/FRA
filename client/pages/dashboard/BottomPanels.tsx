@@ -14,7 +14,7 @@ import { useApp } from "@/context/AppContext";
 
 export const BottomPanels = () => {
   const nav = useNavigate();
-  const { addHistory } = useApp();
+  const { addHistory, workflowTasks } = useApp();
   return (
     <div className="grid lg:grid-cols-2 gap-4 mt-4">
       <Card>
