@@ -16,7 +16,7 @@ import React from "react";
 type Row = { patta: string; claimant: string; status: string };
 
 export default function Queue() {
-  const { addHistory, addNotification } = useApp();
+  const { addHistory, addNotification, removeWorkflowTask } = useApp();
   const [rows, setRows] = React.useState<Row[]>([
     { patta: "OD-PA-0012", claimant: "Radha Majhi", status: "Pending" },
     { patta: "OD-RG-2341", claimant: "B. Soren", status: "Review" },
