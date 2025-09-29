@@ -62,6 +62,10 @@ interface AppContextType {
   markAllNotificationsRead: () => void;
   location: LocationPath;
   setLocation: (l: LocationPath) => void;
+  workflowTasks: WorkflowTask[];
+  addWorkflowTask: (t: WorkflowTask) => void;
+  updateWorkflowTask: (patta: string, patch: Partial<WorkflowTask>) => void;
+  removeWorkflowTask: (patta: string) => void;
   claims: Claim[];
   addClaim: (c: Claim) => void;
   updateClaim: (c: Claim) => void;
