@@ -38,6 +38,7 @@ export default function Queue() {
       title: `Claim ${pastTense}`,
       description: `${r.patta} updated`,
     });
+    if (action === "Reject") removeWorkflowTask(r.patta);
     setRows((prev) => prev.filter((i) => i.patta !== r.patta));
   };
 
