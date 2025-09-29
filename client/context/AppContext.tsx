@@ -37,6 +37,7 @@ export interface Claim {
   createdAt: string;
   source: "ocr" | "manual";
 }
+export type WorkflowTask = { patta: string; claimant: string; status: "Pending" | "Review" | "Approved" | "Rejected"; officer?: string };
 
 interface AppContextType {
   role: Role;
