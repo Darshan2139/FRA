@@ -26,21 +26,20 @@ export const MapArea: React.FC<MapAreaProps> = ({ onSelectVillage }) => {
     <div className="relative w-full h-full min-h-[420px] sm:min-h-[480px] lg:min-h-[620px]">
       {/* Map placeholder */}
       <Card className="absolute inset-0 overflow-hidden shadow">
-        <img
-          src="/map-dashboard.svg"
-          alt="Map background"
-          className="absolute inset-0 w-full h-full object-cover object-center opacity-90"
+        <iframe
+          title="Basemap"
+          className="absolute inset-0 w-full h-full"
+          src={`https://api.maptiler.com/maps/streets/?key=${import.meta.env.VITE_MAPTILER_KEY}#5.2/20.59/78.96`}
+          loading="lazy"
         />
         <div
-          className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_hsl(var(--border))_1px,_transparent_0)] [background-size:16px_16px]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_hsl(var(--border))_1px,_transparent_0)] [background-size:16px_16px]"
           aria-hidden
         />
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
           <div className="text-center">
             <MapIcon className="h-10 w-10 mx-auto text-muted-foreground" />
-            <p className="text-muted-foreground">
-              Interactive WebGIS Map (placeholder)
-            </p>
+            <p className="text-muted-foreground">Interactive WebGIS Map</p>
           </div>
         </div>
 
