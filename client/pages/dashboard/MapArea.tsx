@@ -16,12 +16,40 @@ import {
 } from "lucide-react";
 import React from "react";
 import { toast } from "@/hooks/use-toast";
+import { useApp } from "@/context/AppContext";
 
 export interface MapAreaProps {
   onSelectVillage: (id: string) => void;
 }
 
+function latLonToPercent(lat: number, lon: number) {
+  const LAT_MIN = 7.0;
+  const LAT_MAX = 37.0;
+  const LON_MIN = 68.0;
+  const LON_MAX = 97.0;
+  const xPct = ((lon - LON_MIN) / (LON_MAX - LON_MIN)) * 100;
+  const yPct = ((LAT_MAX - lat) / (LAT_MAX - LAT_MIN)) * 100;
+  return { xPct: Math.min(100, Math.max(0, xPct)), yPct: Math.min(100, Math.max(0, yPct)) };
+}
+
 export const MapArea: React.FC<MapAreaProps> = ({ onSelectVillage }) => {
+  const { claims, selectedState } = useApp();
+
+  const markers = React.useMemo(() => {
+    return claims
+      .filter((c) => !c.state || c.state === selectedState)
+      .map((c) => {
+        const m = /(-?\d+\.?\d*),\s*(-?\d+\.?\d*)/.exec(c.coordinates || "");
+        if (!m) return null;
+        const lat = parseFloat(m[1]);
+        const lon = parseFloat(m[2]);
+        if (Number.isNaN(lat) || Number.isNaN(lon)) return null;
+        const { xPct, yPct } = latLonToPercent(lat, lon);
+        return { id: c.id, pattaId: c.pattaId, name: c.name, xPct, yPct };
+      })
+      .filter(Boolean) as { id: string; pattaId: string; name: string; xPct: number; yPct: number }[];
+  }, [claims, selectedState]);
+
   return (
     <div className="relative w-full h-full min-h-[420px] sm:min-h-[480px] lg:min-h-[620px]">
       {/* Map placeholder */}
