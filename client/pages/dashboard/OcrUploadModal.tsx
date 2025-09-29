@@ -278,6 +278,7 @@ export const OcrUploadModal: React.FC<{
                   status: "Pending",
                   createdAt: new Date().toISOString(),
                   source: "ocr",
+                  state: selectedState,
                 });
                 toast({
                   title: "Claim saved",
