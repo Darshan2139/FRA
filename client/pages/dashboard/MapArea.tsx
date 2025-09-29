@@ -186,6 +186,17 @@ export const MapArea: React.FC<MapAreaProps> = ({ onSelectVillage }) => {
           <Layers className="h-4 w-4" /> Layers
         </Button>
       </div>
+
+      {markers.map((m) => (
+        <button
+          key={m.id}
+          className="absolute -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-primary ring-2 ring-white shadow"
+          style={{ left: `${m.xPct}%`, top: `${m.yPct}%` }}
+          aria-label={`Claim ${m.pattaId} — ${m.name}`}
+          onClick={() => toast({ title: m.pattaId, description: m.name })}
+        />
+      ))}
+
       <div className="absolute bottom-3 left-3 flex items-center gap-2 rounded-md border bg-card/95 backdrop-blur shadow px-3 py-1.5 text-xs">
         <span className="font-semibold">Lat:</span> 18.813°N{" "}
         <span className="mx-1">|</span>{" "}
