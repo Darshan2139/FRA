@@ -36,6 +36,7 @@ export interface Claim {
   status: ClaimStatus;
   createdAt: string;
   source: "ocr" | "manual";
+  state?: AtlasState;
 }
 export type WorkflowTask = { patta: string; claimant: string; status: "Pending" | "Review" | "Approved" | "Rejected"; officer?: string };
 
