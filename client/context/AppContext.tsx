@@ -143,6 +143,22 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       return { state: "Odisha" };
     }
   });
+  const [workflowTasks, setWorkflowTasks] = useState<WorkflowTask[]>(() => {
+    try {
+      const raw = localStorage.getItem("fra_tasks");
+      return raw ? JSON.parse(raw) : [
+        { patta: "OD-PA-0012", claimant: "Radha Majhi", status: "Pending", officer: "R. Verma" },
+        { patta: "OD-RG-2341", claimant: "B. Soren", status: "Review", officer: "S. Nandi" },
+        { patta: "OD-MB-0913", claimant: "A. Das", status: "Approved", officer: "A. Das" },
+      ];
+    } catch {
+      return [
+        { patta: "OD-PA-0012", claimant: "Radha Majhi", status: "Pending", officer: "R. Verma" },
+        { patta: "OD-RG-2341", claimant: "B. Soren", status: "Review", officer: "S. Nandi" },
+        { patta: "OD-MB-0913", claimant: "A. Das", status: "Approved", officer: "A. Das" },
+      ];
+    }
+  });
   const [claims, setClaims] = useState<Claim[]>(() => {
     try {
       const raw = localStorage.getItem("fra_claims");
