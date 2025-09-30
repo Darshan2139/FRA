@@ -12,7 +12,11 @@ import { toast } from "@/hooks/use-toast";
 function useQuery() { const { search } = useLocation(); return useMemo(()=> new URLSearchParams(search), [search]); }
 
 export default function DigitalPatta() {
+<<<<<<< HEAD
   const { claims, addClaim, updateClaim, ocrDraft, setOcrDraft, addHistory, addNotification, selectedState } = useApp();
+=======
+  const { claims, addClaim, updateClaim, ocrDraft, setOcrDraft, addHistory, addNotification } = useApp();
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
   const q = useQuery();
   const id = q.get("id");
   const existing = claims.find(c => c.id === id);
@@ -37,7 +41,11 @@ export default function DigitalPatta() {
       toast({ title: "Updated", description: pattaId });
     } else {
       const newId = crypto.randomUUID();
+<<<<<<< HEAD
       addClaim({ id: newId, pattaId, name, village, coordinates, claimType, area, status: status as any, createdAt: new Date().toISOString(), source: ocrDraft ? "ocr" : "manual", state: selectedState });
+=======
+      addClaim({ id: newId, pattaId, name, village, coordinates, claimType, area, status: status as any, createdAt: new Date().toISOString(), source: ocrDraft ? "ocr" : "manual" });
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
       addNotification({ title: "New Digital Patta", description: pattaId });
       addHistory({ type: "upload", title: "Digital Patta Saved", description: pattaId });
       setOcrDraft(null);

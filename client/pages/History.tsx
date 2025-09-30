@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useApp } from "@/context/AppContext";
 import { BackButton } from "@/components/ui/back-button";
+<<<<<<< HEAD
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -84,14 +85,33 @@ export default function History() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           {notificationsList.map((n) => (
+=======
+
+export default function History() {
+  const { notificationsList, history, markAllNotificationsRead } = useApp();
+  return (
+    <main className="container py-8 grid lg:grid-cols-2 gap-6">
+      <div className="lg:col-span-2 -mt-2 mb-1"><BackButton /></div>
+      <Card>
+        <CardHeader className="flex-row items-center justify-between">
+          <CardTitle>Notifications</CardTitle>
+          <Button size="sm" variant="outline" onClick={markAllNotificationsRead}>Mark all read</Button>
+        </CardHeader>
+        <CardContent className="space-y-3 text-sm">
+          {notificationsList.map((n)=> (
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
             <div key={n.id} className="flex items-start justify-between">
               <div>
                 <div className="font-medium">{n.title}</div>
                 <div className="text-muted-foreground">{n.description}</div>
               </div>
+<<<<<<< HEAD
               <Badge variant={n.read ? "outline" : "default"}>
                 {new Date(n.ts).toLocaleString()}
               </Badge>
+=======
+              <Badge variant={n.read ? "outline" : "default"}>{new Date(n.ts).toLocaleString()}</Badge>
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
             </div>
           ))}
         </CardContent>
@@ -102,6 +122,7 @@ export default function History() {
           <CardTitle>Audit Trail</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
+<<<<<<< HEAD
           {filtered.map((h) => (
             <div key={h.id}>
               <div className="flex items-center justify-between">
@@ -118,14 +139,24 @@ export default function History() {
                     Delete
                   </Button>
                 </div>
+=======
+          {history.map((h)=> (
+            <div key={h.id}>
+              <div className="flex items-center justify-between">
+                <div className="font-medium">{h.title}</div>
+                <Badge variant="outline">{new Date(h.ts).toLocaleString()}</Badge>
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
               </div>
               <div className="text-muted-foreground">{h.description}</div>
               <Separator className="my-2" />
             </div>
           ))}
+<<<<<<< HEAD
           {filtered.length === 0 && (
             <div className="text-muted-foreground">No entries.</div>
           )}
+=======
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
         </CardContent>
       </Card>
     </main>

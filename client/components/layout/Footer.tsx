@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 
+<<<<<<< HEAD
 const partners: { name: string; acronym: string; color: string }[] = [
   { name: "National Informatics Centre", acronym: "NIC", color: "#0B5ED7" },
   { name: "Ministry of Electronics & IT", acronym: "MeitY", color: "#0A9396" },
@@ -10,12 +11,15 @@ const partners: { name: string; acronym: string; color: string }[] = [
   { name: "UIDAI", acronym: "UIDAI", color: "#6A4C93" },
 ];
 
+=======
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
 export const Footer = () => {
   return (
     <footer className="mt-16 border-t bg-card">
       <div className="container py-10 grid gap-8 md:grid-cols-3">
         <div>
           <h3 className="font-semibold text-lg">Partners</h3>
+<<<<<<< HEAD
           <ul className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-4">
             {partners.map((p) => (
               <li key={p.name} className="flex items-center gap-2">
@@ -53,10 +57,24 @@ export const Footer = () => {
           <p className="text-sm text-muted-foreground">
             Phone: +91-11-12345678
           </p>
+=======
+          <div className="mt-3 flex items-center gap-4 opacity-80">
+            <img src="/placeholder.svg" alt="Partner 1" className="h-10 w-auto" />
+            <img src="/placeholder.svg" alt="Partner 2" className="h-10 w-auto" />
+            <img src="/placeholder.svg" alt="Partner 3" className="h-10 w-auto" />
+          </div>
+        </div>
+        <div>
+          <h3 className="font-semibold text-lg">Contact</h3>
+          <p className="mt-3 text-sm text-muted-foreground">Ministry of Tribal Affairs, Government of India</p>
+          <p className="text-sm text-muted-foreground">Email: dss-support@gov.in</p>
+          <p className="text-sm text-muted-foreground">Phone: +91-11-12345678</p>
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
         </div>
         <div>
           <h3 className="font-semibold text-lg">Resources</h3>
           <ul className="mt-3 space-y-2 text-sm">
+<<<<<<< HEAD
             <li>
               <Link to="/about" className="hover:underline">
                 About Project
@@ -80,11 +98,17 @@ export const Footer = () => {
                 Terms of Use
               </a>
             </li>
+=======
+            <li><Link to="/about" className="hover:underline">About Project</Link></li>
+            <li><a href="#" aria-disabled className="pointer-events-none text-muted-foreground">Privacy Policy</a></li>
+            <li><a href="#" aria-disabled className="pointer-events-none text-muted-foreground">Terms of Use</a></li>
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
           </ul>
         </div>
       </div>
       <Separator />
       <div className="container py-6 text-xs text-muted-foreground flex flex-col sm:flex-row items-center justify-between">
+<<<<<<< HEAD
         <p>
           © {new Date().getFullYear()} FRA Atlas & WebGIS DSS. All rights
           reserved.
@@ -92,6 +116,11 @@ export const Footer = () => {
         <p>
           Built for accessibility: high contrast, keyboard navigation, and
           screen reader friendly.
+=======
+        <p>© {new Date().getFullYear()} FRA Atlas & WebGIS DSS. All rights reserved.</p>
+        <p>
+          Built for accessibility: high contrast, keyboard navigation, and screen reader friendly.
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
         </p>
       </div>
     </footer>

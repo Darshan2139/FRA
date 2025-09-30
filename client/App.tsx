@@ -16,7 +16,10 @@ import Queue from "./pages/Queue";
 import DssRecommendations from "./pages/DssRecommendations";
 import Profile from "./pages/Profile";
 import DigitalPatta from "./pages/DigitalPatta";
+<<<<<<< HEAD
 import ProjectBrief from "./pages/ProjectBrief";
+=======
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AppProvider } from "@/context/AppContext";
@@ -41,7 +44,10 @@ const App = () => (
             <Route path="/dss" element={<DssRecommendations />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/patta" element={<DigitalPatta />} />
+<<<<<<< HEAD
             <Route path="/project-brief" element={<ProjectBrief />} />
+=======
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

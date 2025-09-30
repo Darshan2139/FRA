@@ -10,6 +10,7 @@ export interface LocationPath {
   village?: string;
 }
 
+<<<<<<< HEAD
 export type NotificationItem = {
   id: string;
   title: string;
@@ -40,22 +41,32 @@ export interface Claim {
   tribe?: string;
 }
 export type WorkflowTask = { patta: string; claimant: string; status: "Pending" | "Review" | "Approved" | "Rejected"; officer?: string };
+=======
+export type NotificationItem = { id: string; title: string; description: string; ts: string; read: boolean };
+export type HistoryItem = { id: string; type: "upload" | "status" | "export" | "dss" | "login"; title: string; description: string; ts: string };
+export type ClaimStatus = "Pending" | "Review" | "Approved" | "Rejected";
+export interface Claim { id: string; pattaId: string; name: string; village: string; coordinates: string; claimType: string; area?: string; status: ClaimStatus; createdAt: string; source: "ocr" | "manual"; }
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
 
 interface AppContextType {
   role: Role;
   setRole: (r: Role) => void;
   selectedState: AtlasState;
   setSelectedState: (s: AtlasState) => void;
+<<<<<<< HEAD
   selectedTribe?: string;
   setSelectedTribe: (t: string | undefined) => void;
   selectedLayers: Record<string, boolean>;
   setSelectedLayers: (updater: (prev: Record<string, boolean>) => Record<string, boolean>) => void;
+=======
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
   searchQuery: string;
   setSearchQuery: (q: string) => void;
   notifications: number;
   setNotifications: (n: number) => void;
   notificationsList: NotificationItem[];
   setNotificationsList: (n: NotificationItem[]) => void;
+<<<<<<< HEAD
   addNotification: (
     n: Omit<NotificationItem, "id" | "ts" | "read"> &
       Partial<Pick<NotificationItem, "read" | "ts">>,
@@ -72,6 +83,14 @@ interface AppContextType {
   addWorkflowTask: (t: WorkflowTask) => void;
   updateWorkflowTask: (patta: string, patch: Partial<WorkflowTask>) => void;
   removeWorkflowTask: (patta: string) => void;
+=======
+  addNotification: (n: Omit<NotificationItem, "id" | "ts" | "read"> & Partial<Pick<NotificationItem, "read" | "ts">>) => void;
+  history: HistoryItem[];
+  addHistory: (h: Omit<HistoryItem, "id" | "ts"> & Partial<Pick<HistoryItem, "ts">>) => void;
+  markAllNotificationsRead: () => void;
+  location: LocationPath;
+  setLocation: (l: LocationPath) => void;
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
   claims: Claim[];
   addClaim: (c: Claim) => void;
   updateClaim: (c: Claim) => void;
@@ -84,6 +103,7 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
+<<<<<<< HEAD
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
@@ -153,10 +173,25 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
         ts: new Date(Date.now() - 7200_000).toISOString(),
         read: true,
       },
+=======
+export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [role, setRole] = useState<Role>("Ministry");
+  const [selectedState, setSelectedState] = useState<AtlasState>(() => {
+    try { return (localStorage.getItem("fra_state") as AtlasState) || "Odisha"; } catch { return "Odisha"; }
+  });
+  const [searchQuery, setSearchQuery] = useState("");
+  const [notifications, setNotifications] = useState(0);
+  const [notificationsList, setNotificationsList] = useState<NotificationItem[]>(() => {
+    const seed: NotificationItem[] = [
+      { id: crypto.randomUUID(), title: "New OCR Upload", description: "Patta OD-PA-0012 uploaded for Badakua", ts: new Date().toISOString(), read: false },
+      { id: crypto.randomUUID(), title: "DSS Ready", description: "Jal Jeevan recommended for Akkad (priority 91)", ts: new Date(Date.now()-3600_000).toISOString(), read: false },
+      { id: crypto.randomUUID(), title: "Queue Updated", description: "3 claims pending verification in Koraput", ts: new Date(Date.now()-7200_000).toISOString(), read: true },
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
     ];
     return seed;
   });
   const [history, setHistory] = useState<HistoryItem[]>(() => [
+<<<<<<< HEAD
     {
       id: crypto.randomUUID(),
       type: "login",
@@ -171,11 +206,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       description: "Schemes proposed for Akkad",
       ts: new Date(Date.now() - 5400_000).toISOString(),
     },
+=======
+    { id: crypto.randomUUID(), type: "login", title: "Login", description: "User signed in", ts: new Date(Date.now()-10800_000).toISOString() },
+    { id: crypto.randomUUID(), type: "dss", title: "DSS Generated", description: "Schemes proposed for Akkad", ts: new Date(Date.now()-5400_000).toISOString() },
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
   ]);
   const [location, setLocation] = useState<LocationPath>(() => {
     try {
       const raw = localStorage.getItem("fra_location");
       return raw ? JSON.parse(raw) : { state: "Odisha" };
+<<<<<<< HEAD
     } catch {
       return { state: "Odisha" };
     }
@@ -214,6 +254,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     },
   );
+=======
+    } catch { return { state: "Odisha" }; }
+  });
+  const [claims, setClaims] = useState<Claim[]>(() => {
+    try { const raw = localStorage.getItem("fra_claims"); return raw ? JSON.parse(raw) : []; } catch { return []; }
+  });
+  const [ocrDraft, setOcrDraft] = useState<Partial<Claim> | null>(null);
+  const [isAuthenticatedState, setIsAuthenticatedState] = useState<boolean>(() => {
+    try { return localStorage.getItem("fra_authed") === "1"; } catch { return false; }
+  });
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
   const setAuthenticated = (v: boolean) => {
     setIsAuthenticatedState(v);
     try {
@@ -223,6 +274,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   // persist state & location
+<<<<<<< HEAD
   React.useEffect(() => {
     try {
       localStorage.setItem("fra_state", selectedState);
@@ -256,6 +308,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [claims]);
   React.useEffect(() => {
     const unread = notificationsList.filter((n) => !n.read).length;
+=======
+  React.useEffect(() => { try { localStorage.setItem("fra_state", selectedState); } catch {} }, [selectedState]);
+  React.useEffect(() => { try { localStorage.setItem("fra_location", JSON.stringify(location)); } catch {} }, [location]);
+  React.useEffect(() => { try { localStorage.setItem("fra_claims", JSON.stringify(claims)); } catch {} }, [claims]);
+  React.useEffect(() => {
+    const unread = notificationsList.filter(n => !n.read).length;
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
     setNotifications(unread);
   }, [notificationsList]);
 
@@ -270,7 +329,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
     setNotificationsList((prev) => [item, ...prev]);
   };
   const markAllNotificationsRead = () => {
+<<<<<<< HEAD
     setNotificationsList((prev) => prev.map((n) => ({ ...n, read: true })));
+=======
+    setNotificationsList((prev) => prev.map(n => ({ ...n, read: true })));
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
   };
   const addHistory: AppContextType["addHistory"] = (h) => {
     const item: HistoryItem = {
@@ -282,6 +345,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
     };
     setHistory((prev) => [item, ...prev]);
   };
+<<<<<<< HEAD
   const removeHistory: AppContextType["removeHistory"] = (id) => {
     setHistory((prev) => prev.filter((h) => h.id !== id));
   };
@@ -352,6 +416,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       ocrDraft,
       isAuthenticatedState,
     ],
+=======
+
+  const addClaim: AppContextType["addClaim"] = (c) => setClaims((prev) => [c, ...prev]);
+  const updateClaim: AppContextType["updateClaim"] = (c) => setClaims((prev) => prev.map((i) => (i.id === c.id ? c : i)));
+  const removeClaim: AppContextType["removeClaim"] = (id) => setClaims((prev) => prev.filter((i) => i.id !== id));
+
+  const value = useMemo(
+    () => ({ role, setRole, selectedState, setSelectedState, searchQuery, setSearchQuery, notifications, setNotifications, notificationsList, setNotificationsList, addNotification, history, addHistory, markAllNotificationsRead, location, setLocation, claims, addClaim, updateClaim, removeClaim, ocrDraft, setOcrDraft, isAuthenticated: isAuthenticatedState, setAuthenticated }),
+    [role, selectedState, searchQuery, notifications, notificationsList, history, location, claims, ocrDraft, isAuthenticatedState]
+>>>>>>> 6548e770c42125b862edafd3fcf9a3601e227221
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
