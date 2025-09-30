@@ -17,6 +17,15 @@ export function createServer() {
     res.json({ message: ping });
   });
 
+  // Health check endpoint for Render
+  app.get("/health", (_req, res) => {
+    res.status(200).json({ 
+      status: "healthy", 
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime()
+    });
+  });
+
   app.get("/api/demo", handleDemo);
 
   return app;
