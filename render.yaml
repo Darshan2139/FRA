@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: fusion-starter
+    env: node
+    plan: free
+    buildCommand: pnpm install && pnpm build
+    startCommand: pnpm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: PING_MESSAGE
+        value: "Fusion Starter is running on Render!"
